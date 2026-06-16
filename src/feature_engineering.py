@@ -30,7 +30,9 @@ def split_data(df, test_size = 0.2, random_state = 42):
         df.drop(columns = ["Churn"]), 
         df["Churn"], 
         test_size = test_size, 
-        random_state = random_state
+        random_state = random_state, 
+        stratify = df["Churn"]
+
     )
     return  X_train, X_test, y_train, y_test
 
@@ -103,8 +105,8 @@ if __name__ == "__main__":
     X_test_processed = preprocessor.transform(X_test)
 
     logging.info("Saving splited and preprocessed data...")
-    joblib.dump(X_train, r"Data\ML_ready\X_train.pkl")
-    joblib.dump(X_test, r"Data\ML_ready\X_test.pkl")
+    joblib.dump(X_train_processed, r"Data\ML_ready\X_train.pkl")
+    joblib.dump(X_test_processed, r"Data\ML_ready\X_test.pkl")
     joblib.dump(y_train, r"Data\ML_ready\y_train.pkl")
     joblib.dump(y_test, r"Data\ML_ready\y_test.pkl")
     joblib.dump(preprocessor, r"Data\ML_ready\processor.pkl")
