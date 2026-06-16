@@ -107,4 +107,5 @@ if __name__ == "__main__":
     joblib.dump(X_test, r"Data\ML_ready\X_test.pkl")
     joblib.dump(y_train, r"Data\ML_ready\y_train.pkl")
     joblib.dump(y_test, r"Data\ML_ready\y_test.pkl")
+    joblib.dump(preprocessor, r"Data\ML_ready\processor.pkl")
 
