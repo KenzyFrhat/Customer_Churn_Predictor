@@ -8,7 +8,7 @@ import joblib
 import logging
 
 
-df = pd.read_csv(r"Data\cleaned\customer_churn_cleaned.csv")
+
 
 ONE_HOT_ENCODING = ["gender",
                     "MultipleLines", 
@@ -21,7 +21,7 @@ NUMERICAL_COLS = [
     "tenure", "TotalCharges", "MonthlyCharges"
 ]
 
-DEUPLICATED_COLS = ["PhoneService"] #this columns became duplicated columns after one hot ecoding operation
+DUPLICATED_COLS = ["PhoneService"] #this columns became duplicated columns after one hot ecoding operation
 
 
 
@@ -76,7 +76,7 @@ def Pipline():
                 ONE_HOT_ENCODING
             ), 
             (
-                "Oridnal encoding",
+                "Ordinal encoding",
                 OrdinalEncoder(
                     categories = [
                         ["Month-to-month", "One year", "Two year"]
@@ -84,9 +84,9 @@ def Pipline():
                         ), ORDINAL_COLS
             ),
             (
-                "drop_deplicated_cols", 
+                "drop_duplicated_cols", 
                 "drop", 
-                DEUPLICATED_COLS
+                DUPLICATED_COLS
             )
         ], 
         remainder = "passthrough"
@@ -94,7 +94,9 @@ def Pipline():
     return preprocessor 
 
 
-if __name__ == "__main__":
+
+def main():
+    df = pd.read_csv(r"Data\cleaned\customer_churn_cleaned.csv")
     logging.basicConfig(level=logging.INFO)
     logging.info("Splitting Data...")
     X_train, X_test, y_train, y_test  = split_data(df)
@@ -110,4 +112,8 @@ if __name__ == "__main__":
     joblib.dump(y_train, r"Data\ML_ready\y_train.pkl")
     joblib.dump(y_test, r"Data\ML_ready\y_test.pkl")
     joblib.dump(preprocessor, r"Data\ML_ready\processor.pkl")
+
+
+if __name__ == "__main__":
+    main()
 
